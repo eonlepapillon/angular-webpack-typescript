@@ -1,6 +1,7 @@
-import {module} from 'angular';
+import {IModule, module} from 'angular';
+import './ttt';
 
-export let app: angular.IModule = module('app', []);
+export let app: IModule = module('app', ['tttComponents']);
 
 app.run(function () {
     console.log('PING');

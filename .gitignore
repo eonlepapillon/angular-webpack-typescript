@@ -1,5 +1,7 @@
 *.iml
 .idea
+npm-debug.log
+coverage
 node_modules
 src/**/*.js
 src/**/*.map

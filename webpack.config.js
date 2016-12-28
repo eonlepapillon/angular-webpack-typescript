@@ -1,8 +1,9 @@
+const webpack = require('webpack');
 const sourceDir = __dirname + '/src';
 
 module.exports = {
     context: sourceDir,
-    entry: './main.bootstrap.js',
+    entry: './index.js',
     output: {
         path: sourceDir,
         filename: 'bundle.js'
@@ -14,7 +15,11 @@ module.exports = {
     module: {
         loaders: [
             // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
-            {test: /\.tsx?$/, loader: 'ts-loader'}
+            {test: /\.tsx?$/, loader: 'ng-annotate!ts', exclude: /node_modules/},
+            {test: /\.html/, loader: 'raw', exclude: /node_modules/}
         ]
-    }
+    },
+    plugins: [
+        // new webpack.optimize.UglifyJsPlugin()
+    ]
 };
