@@ -4,11 +4,9 @@ import {IComponentOptions, IComponentController, ILogService} from 'angular';
 export default class TttController implements IComponentController{
     public title = 'Hello world!';
 
-
     constructor($log: ILogService){
         'ngInject';
-        console.log('lalalala');
-        $log.info('tttComponent');
+        $log.info('tttComponent', this.title);
     }
 }
 
