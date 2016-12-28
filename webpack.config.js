@@ -3,10 +3,15 @@ const sourceDir = __dirname + '/src';
 
 module.exports = {
     context: sourceDir,
-    entry: './index.js',
+    entry: {
+        app: './index.js',
+        vendor: [
+            'angular'
+        ]
+    },
     output: {
         path: sourceDir,
-        filename: 'bundle.js'
+        filename: 'app.bundle.js'
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
@@ -20,6 +25,7 @@ module.exports = {
         ]
     },
     plugins: [
-        // new webpack.optimize.UglifyJsPlugin()
+        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+        new webpack.optimize.UglifyJsPlugin()
     ]
 };
