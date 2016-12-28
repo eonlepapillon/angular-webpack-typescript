@@ -1,8 +1,7 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-// const path = require('path');
-// const fs = require('fs');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 let config = {
     context: `${__dirname}/src`,
@@ -12,6 +11,7 @@ let config = {
             'angular'
         ]
     },
+    devtool: 'source-map',
     output: {
         path: `${__dirname}/dist`,
         filename: '[name].bundle.js'
@@ -41,10 +41,9 @@ let htmlWebpackPluginConfig = {
 
 
 // Overwrite config for development or production
-
-if (false) {
+if (true) {
     // dev
-    config.plugins.push(new webpack.optimize.UglifyJsPlugin(htmlWebpackPluginConfig));
+    config.plugins.push(new HtmlWebpackPlugin(htmlWebpackPluginConfig));
 
 } else {
     // prd
