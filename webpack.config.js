@@ -1,8 +1,11 @@
 const webpack = require('webpack');
-const sourceDir = __dirname + '/src';
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+// const path = require('path');
+// const fs = require('fs');
 
-module.exports = {
-    context: sourceDir,
+let config = {
+    context: `${__dirname}/src`,
     entry: {
         app: './index.js',
         vendor: [
@@ -10,8 +13,8 @@ module.exports = {
         ]
     },
     output: {
-        path: sourceDir,
-        filename: 'app.bundle.js'
+        path: `${__dirname}/dist`,
+        filename: '[name].bundle.js'
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
@@ -25,7 +28,36 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
-        new webpack.optimize.UglifyJsPlugin()
+        new CleanWebpackPlugin(['dist'], {
+            verbose: true,
+            dry: false
+        })
     ]
 };
+
+let htmlWebpackPluginConfig = {
+    template: './index.html'
+};
+
+
+// Overwrite config for development or production
+
+if (false) {
+    // dev
+    config.plugins.push(new webpack.optimize.UglifyJsPlugin(htmlWebpackPluginConfig));
+
+} else {
+    // prd
+    htmlWebpackPluginConfig.minify = {
+        html5: true,
+        removeComments: true,
+        collapseWhitespace: true,
+        conservativeCollapse: true,
+    };
+
+    config.output.filename = '[name].bundle.[chunkhash].js';
+    config.plugins.push(new webpack.optimize.UglifyJsPlugin());
+    config.plugins.push(new HtmlWebpackPlugin(htmlWebpackPluginConfig));
+}
+
+module.exports = config;
